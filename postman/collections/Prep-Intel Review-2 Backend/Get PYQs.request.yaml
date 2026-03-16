@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get PYQs
+method: GET
+url: '{{baseUrl}}/api/pyqs'
+order: 4000

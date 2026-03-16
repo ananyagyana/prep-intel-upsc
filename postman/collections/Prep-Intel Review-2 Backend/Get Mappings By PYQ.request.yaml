@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Mappings By PYQ
+method: GET
+url: '{{baseUrl}}/api/mappings/pyq/{{pyqId}}'
+order: 8000

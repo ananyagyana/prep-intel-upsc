@@ -1,0 +1,8 @@
+$kind: http-request
+name: Get User Progress
+method: GET
+url: '{{baseUrl}}/api/progress/{{userId}}'
+order: 10000
+headers:
+  - key: Authorization
+    value: 'Bearer {{token}}'

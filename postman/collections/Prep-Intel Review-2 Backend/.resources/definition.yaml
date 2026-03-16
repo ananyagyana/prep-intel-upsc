@@ -1,0 +1,13 @@
+$kind: collection
+name: Prep-Intel Review-2 Backend
+variables:
+  - key: baseUrl
+    value: 'http://localhost:5000'
+  - key: token
+    value: ''
+  - key: userId
+    value: ''
+  - key: topicId
+    value: ''
+  - key: pyqId
+    value: ''

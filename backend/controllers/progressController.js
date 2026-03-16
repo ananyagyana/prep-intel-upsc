@@ -2,7 +2,9 @@ const Progress = require('../models/Progress');
 
 const createOrUpdateProgress = async (req, res) => {
   try {
-    const { userId, topicId, completionPercentage, status } = req.body;
+    // Use authenticated user ID, or from body for demo purposes
+    const userId = req.user?.id || req.body.userId;
+    const { topicId, completionPercentage, status } = req.body;
 
     // Validate required fields
     if (!userId || !topicId || completionPercentage === undefined || !status) {
@@ -20,19 +22,27 @@ const createOrUpdateProgress = async (req, res) => {
       });
     }
 
-    // Validate status enum
-    const validStatuses = ['not_started', 'in_progress', 'completed'];
-    if (!validStatuses.includes(status)) {
+    // Validate status value and normalize to internal enum
+    const statusMap = {
+      'not started': 'not_started',
+      'not_started': 'not_started',
+      'in progress': 'in_progress',
+      'in_progress': 'in_progress',
+      'completed': 'completed'
+    };
+
+    const normalizedStatus = statusMap[status.toString().toLowerCase()];
+    if (!normalizedStatus) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid status. Must be one of: not_started, in_progress, completed'
+        message: 'Invalid status. Must be one of: Not Started, In Progress, Completed'
       });
     }
 
     // Create or update progress using upsert
     const progress = await Progress.findOneAndUpdate(
       { userId, topicId }, // Filter
-      { userId, topicId, completionPercentage, status }, // Update data
+      { userId, topicId, completionPercentage, status: normalizedStatus }, // Update data
       {
         new: true, // Return updated document
         upsert: true, // Create if doesn't exist
@@ -58,7 +68,8 @@ const createOrUpdateProgress = async (req, res) => {
 
 const getUserProgress = async (req, res) => {
   try {
-    const { userId } = req.params;
+    // Use authenticated user ID, or from params for demo purposes
+    const userId = req.user?.id || req.params.userId;
 
     if (!userId) {
       return res.status(400).json({

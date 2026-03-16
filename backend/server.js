@@ -18,8 +18,12 @@ app.get("/", (req, res) => {
 });
 
 // API Routes
+app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/topics", require("./routes/topicRoutes"));
 app.use("/api/pyqs", require("./routes/pyqRoutes"));
+app.use("/api/recommendations", require("./routes/recommendationRoutes"));
+app.use("/api/mappings", require("./routes/mappingRoutes"));
+app.use("/api/progress", require("./routes/progressRoutes"));
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,9 +1,7 @@
-const express = require('express');
-const { getRecommendations } = require('../controllers/recommendationController');
-
+const express = require("express");
 const router = express.Router();
+const { getRecommendations } = require("../controllers/recommendationController");
 
-// GET /api/recommendations - Get topic recommendations
-router.get('/', getRecommendations);
+router.get("/", getRecommendations);
 
 module.exports = router;

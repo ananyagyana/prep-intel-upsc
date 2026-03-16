@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Mappings By Topic
+method: GET
+url: '{{baseUrl}}/api/mappings/topic/{{topicId}}'
+order: 7000
